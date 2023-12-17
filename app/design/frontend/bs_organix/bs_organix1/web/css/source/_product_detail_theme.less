@@ -1,0 +1,123 @@
+.product-detail-product-add-to-form-and-vandor-info {
+    display: flex;
+}
+
+.product-add-form,
+.vandor-details {
+    flex: 1;
+}
+
+.vandor-details {
+    position: absolute;
+    left: 52%;
+    top: 72%;
+
+    .inner {
+        position: relative;
+        border: 2px dotted #7b6d58;
+        padding: 1% 6% 0% 40%;
+        text-align: right;
+        float: right;
+        min-height: 160%;
+        width: 100%;
+    }
+
+    .vandor-contact {
+        position: absolute;
+        left: 0%;
+        bottom: 30%;
+        font-family: "Kalam", cursive;
+        font-size: 14px;
+        line-height: 23px;
+        text-align: center;
+        width: 42%;
+        padding-top: 15%;
+        transform: rotate(-10deg);
+        display: inline-block;
+
+        &:before {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -22%;
+            background-color: #7b6d58;
+            content: "";
+            display: block;
+            width: 32%;
+            height: 42%;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        &:after {
+            position: absolute;
+            top: 10%;
+            left: 48%;
+            margin-left: -8%;
+            content: "?";
+            font-size: 21px;
+            color: #fff;
+        }
+    }
+
+    .vandor-details-label {
+        font-size: 16px;
+        line-height: 200%;
+        padding-bottom: 10%;
+        display: block;
+    }
+
+    h2 {
+        font-size: 17px;
+        line-height: 0%;
+        padding-bottom: 10%;
+        font-family: inherit;
+        font-weight: 700;
+        color: #181716;
+    }
+}
+
+.product-view .product-info-main .box-tocart .fieldset .qty,
+#quick-window .box-tocart .fieldset .qty {
+    margin-right: 0% !important;
+}
+
+.product-social-links {
+    padding-bottom: 5% !important;
+}
+
+// For tablets
+@media (max-width: 768px) {
+    .vandor-details {
+        .vandor-contact {
+            top: 5%;
+        }
+
+        position: absolute;
+        left: 5%;
+        top: 98%;
+        width: 87%;
+    }
+
+    .product.info.detailed {
+        margin-top: 40%;
+    }
+}
+
+// For mobile phones
+@media (max-width: 480px) {
+    .vandor-details {
+        .vandor-contact {
+            top: 5%;
+        }
+
+        position: absolute;
+        left: 5%;
+        top: 98%;
+        width: 87%;
+    }
+
+    .product.info.detailed {
+        margin-top: 40%;
+    }
+}

@@ -1,0 +1,63 @@
+<?php 
+	use Magento\Framework\App\Action\Action;
+	$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+	$enable = $block->getConfig('enabled');
+	if($enable < 1) return ; 
+	$items = $block->getConfig('items');
+	$speed = $block->getConfig('speed');
+	$qty = $block->getConfig('qty');
+	$showCart = $block->getConfig('addtocart');
+	$showWishlist = $block->getConfig('wishlist');
+	$showCompare = $block->getConfig('compare');
+	$show_navigation = $block->getConfig('navigation');
+	$show_pagination = $block->getConfig('pagination');
+	$auto = $block->getConfig('auto');
+	$rows = $block->getSlideRow();
+	$slide_limit = $block->getSlideLimit();
+	$title = $block->getTitle(); 
+	$description= $block->getDescription(); 
+	$identify = trim($block->getIdentify()); 
+	$categoryIds = $block->getCategoryIds();
+	$categoryIds = explode(',', $categoryIds);	
+	$desktop = $this->getConfig('itemsDesktop');
+	$desktop_small = $this->getConfig('itemsDesktopSmall');
+	$tablet = $this->getConfig('itemsTablet');
+	$mobile = $this->getConfig('itemsMobile');
+?>
+
+<div class="categorytab-container">
+	<header class='group-title1'>
+		<?php echo '<h2>'.$title.'</h2>'; ?>
+		<?php echo '<p class="description">'.$description.'</p>'; ?>
+	</header>
+	<ul class="tabs tabs<?php echo '-'.$identify;?>"> 
+	    <?php 
+		$k = 0;
+		foreach($categoryIds as $cate_id) {
+			$newItems =  $block -> getProductCate($cate_id)->getItems();
+			$cate_model =  $block->getCategory($cate_id);
+			$category_load = $cate_model->load($cate_id);
+			$rt_menu_icon_img = $cate_model->getData('rt_menu_icon_img');
+			$pathicon = $storeManager->getStore()->getBaseUrl(
+	                        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+	                ) . 'catalog/category/' . $rt_menu_icon_img;
+			$cateName = $category_load->getName();
+			if($cateName) {
+	  	 ?>
+				<li>
+					<a href="#">
+						<?php if ( $rt_menu_icon_img ): ?>
+						<img class="menu-thumb-icon" src="<?php echo $pathicon; ?>" alt="<?php echo $cateName; ?>" />
+						<?php endif; ?>
+						<span>
+							<?php  echo $cateName; ?>
+						</span>
+					</a>
+				</li>
+		<?php }  $k++; } ?>
+    </ul>
+    
+     
+</div>
+

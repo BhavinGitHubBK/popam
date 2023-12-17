@@ -1,0 +1,73 @@
+<div class="top-content-home">
+	<div class="section-element shipping_support">
+		<div class="container">
+			<div class="shipping_support_contain">
+				<div class="row">
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('shipping_support')->toHtml();?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section-element featured-categories">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('shop_by_categories')->toHtml(); ?>
+		</div>
+	</div>
+
+	<div class="section-element banner_middle">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('banner_middle_h4')->toHtml(); ?>
+		</div>
+	</div>
+
+	<div class="section-element section_products_tabs">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-xs-12">
+					<?php echo $block->getLayout()->createBlock('Rokanthemes\ProductTab\Block\Producttab')->setTemplate('Rokanthemes_ProductTab::producttab.phtml')->toHtml();?>  
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section-element section_products_bestseller">
+		<div class="container">
+			<div class="row">
+				<?php echo $block->getLayout()->createBlock('Rokanthemes\BestsellerProduct\Block\Bestseller')->setTemplate('Rokanthemes_BestsellerProduct::bestseller.phtml')->toHtml();?>  
+			</div>
+		</div>
+	</div>
+	
+	<div class="section-element section_testimonial">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<div class="our_stories">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('our_stories_h4')->toHtml(); ?>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-8 col-md-8">
+					<?php echo $block->getLayout()->createBlock('Rokanthemes\Testimonial\Block\Testimonial')->setTemplate('Rokanthemes_Testimonial::testimonial.phtml')->toHtml();?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section-element section-brands">
+		<div class="container">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('brand-logo')->toHtml(); ?>
+		</div>
+	</div>
+
+	<div class="section-element box-blog">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Rokanthemes\Blog\Block\Sidebar\Recent')->setTemplate('Rokanthemes_Blog::sidebar/slider.phtml')->toHtml();?>
+		</div>
+	</div>
+	<div class="section-element section-newsletter">
+		<div class="container">
+			<?php  echo $this->getLayout()->createBlock('Magento\Newsletter\Block\Subscribe')->setTemplate('Magento_Newsletter::subscribe.phtml')->toHtml(); ?>
+		</div>
+	</div>
+</div>

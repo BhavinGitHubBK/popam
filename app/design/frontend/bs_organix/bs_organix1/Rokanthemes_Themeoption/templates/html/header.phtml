@@ -1,0 +1,76 @@
+<div class="header-container AAAAA">
+	<div class="header">
+		<div class="top-header">
+			<div class="container-full">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 text-left contact-header-left">
+						<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contact_header')->toHtml(); ?>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-6 text-right contact-header-right">
+						<?php if ($this->getChildHtml("store_language")) : ?>
+							<?php echo $this->getChildHtml("store_language"); ?>
+						<?php endif; ?>
+						<?php if ($this->getChildHtml("currency")) : ?>
+							<?php echo $this->getChildHtml("currency"); ?>
+						<?php endif; ?>
+						<div class="social_top">
+							<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('social_top')->toHtml(); ?>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="top-nav">
+			<div class="for-full-withmenu">
+				<?php echo $this->getChildHtml("logo"); ?>
+				<?php echo $this->getChildHtml("top.navigation.sections"); ?>
+				<div class="actions-header">
+					<?php echo $this->getChildHtml("topSearch"); ?>
+					<?php echo $this->getChildHtml("minicart"); ?>
+					<div class="wishlist hidden-xs">
+						<a href="<?php echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getBaseUrl('wishlist'); ?>"><i class="icon-heart lnr lnr-heart"></i></a>
+					</div>
+					<div class="register-login hidden-xs">
+						<?php if (!$this->helper('Rokanthemes\Themeoption\Helper\Data')->isLoggedIn()) { ?>
+							<a href="<?php echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getBaseUrl('customer/account/login/'); ?>">
+								<i class="icon-users lnr lnr-user"></i>
+								<div class="txt-login hidden-sm">
+									<strong><?php echo __('Log in'); ?></strong> <?php echo __('or'); ?> <span>
+										<strong><?php echo __('Register'); ?></strong></span>
+								</div>
+							</a>
+						<?php
+						} else {
+						?>
+							<a href="<?php echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getBaseUrl('customer/account/logout'); ?>"><?php echo __('Logout'); ?></a>
+						<?php } ?>
+
+					</div>
+
+				</div>
+				<div class="hotline">
+					<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('hotline')->toHtml(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	require(['jquery'], function($) {
+		$(document).ready(function($) {
+			$(window).scroll(function() {
+				var num = $('.header-container').outerHeight();
+				var screenWidth = $(window).width();
+
+				if ($(this).scrollTop() > num && screenWidth >= 768) {
+					$(".header").addClass("sticky");
+				} else {
+					$(".header").removeClass("sticky");
+				}
+			});
+		});
+	});
+</script>

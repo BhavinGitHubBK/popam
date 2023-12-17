@@ -1,0 +1,296 @@
+<?php
+
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+
+<?php
+$currentProduct = $block->getProduct();
+$currentProductId = $currentProduct->getId();
+$sellerId = $currentProduct->getSellerId();
+$isSeller = $currentProduct->getIsSellerProduct();
+
+// echo "Current Product ID: " . $currentProductId . "<br>";
+// echo "Seller ID: " . $sellerId . "<br>";
+// echo "Is Seller: " . $isSeller . "<br>";
+
+$helper = $this->helper('Purpletree\Marketplace\Helper\Data');
+// $sellerCollection = $helper->getSellerCollection($currentProductId, $sellerId);
+$StoreDetails = $helper->getStoreDetails($sellerId);
+
+// // Assuming that you have the getStoreDetails method in the same block class
+// $storeBlock = $block->getLayout()->createBlock('Purpletree\Marketplace\Block\StoreInformation');
+// $storeData = $storeBlock->getStoreDetails($sellerId);
+
+// echo "<pre>"; print_r($sellerCollection); echo "</pre>";
+// echo "<pre>"; print_r($StoreDetails); echo "</pre>";
+// die;
+?>
+
+<?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+<?php $_product = $block->getProduct();
+$config_point1 = $this->helper('Rokanthemes\RokanBase\Helper\Data')->getConfigData('setting_categories/categories/point1');
+$arr_config_point1 = array();
+if ($config_point1) {
+    $arr_config_point1 = explode(',', $config_point1);
+}
+$show = false;
+$categories = $_product->getCategoryIds();
+if (count($categories) > 0 && count($arr_config_point1) > 0) {
+    foreach ($arr_config_point1 as $val) {
+        if (in_array(trim($val), $categories)) {
+            $show = true;
+            break;
+        }
+    }
+}
+?>
+<?php if ($show) { ?>
+    <div class="text-description">
+        <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_view_description_price')->toHtml(); ?>
+    </div>
+<?php } ?>
+
+<style>
+    .product-detail-product-add-to-form-and-vandor-info {
+        display: flex;
+    }
+
+    .product-add-form,
+    .vandor-details {
+        flex: 1;
+    }
+
+    .vandor-details {
+        position: absolute;
+        left: 52%;
+        top: 72%;
+    }
+
+    .vandor-details .inner {
+        position: relative;
+        border: 2px dotted #7b6d58;
+        padding: 1% 6% 0% 40%;
+        text-align: right;
+        float: right;
+        min-height: 160%;
+        width: 100%;
+    }
+
+    .vandor-details .vandor-contact {
+        position: absolute;
+        left: 0%;
+        bottom: 30%;
+        font-family: "Kalam", cursive;
+        font-size: 14px;
+        line-height: 23px;
+        /* color: #7ab32f; */
+        text-align: center;
+        width: 42%;
+        padding-top: 15%;
+        -webkit-transform: rotate(-10deg);
+        -moz-transform: rotate(-10deg);
+        -ms-transform: rotate(-10deg);
+        -o-transform: rotate(-10deg);
+        transform: rotate(-10deg);
+        display: inline-block;
+    }
+
+    .vandor-details .vandor-contact:before {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -22%;
+        background-color: #7b6d58;
+        content: "";
+        display: block;
+        width: 32%;
+        height: 42%;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    .vandor-details .vandor-contact:after {
+        position: absolute;
+        top: 10%;
+        left: 48%;
+        margin-left: -8%;
+        content: "?";
+        font-size: 21px;
+        color: #fff;
+    }
+
+    .product-view .product-info-main .box-tocart .fieldset .qty,
+    #quick-window .box-tocart .fieldset .qty {
+        margin-right: 0% !important;
+    }
+
+    .product-social-links {
+        padding-bottom: 5% !important;
+    }
+
+    .vandor-details .vandor-details-label {
+        font-size: 16px;
+        line-height: 200%;
+        padding-bottom: 10%;
+        display: block;
+    }
+
+    .vandor-details h2 {
+        font-size: 17px;
+        line-height: 0%;
+        padding-bottom: 10%;
+    }
+
+    .vandor-details .vandor-details-label,
+    .vandor-details h2 {
+        font-family: inherit;
+        font-weight: 700;
+        color: #181716;
+    }
+
+    /* For tablets */
+    @media (max-width: 768px) {
+        .vandor-details .vandor-contact {
+            top: 5%;
+        }
+
+        .vandor-details {
+            position: absolute;
+            left: 5%;
+            top: 98%;
+            width: 87%;
+        }
+
+        .product.info.detailed {
+            margin-top: 40%;
+        }
+    }
+
+    /* For mobile phones */
+    @media (max-width: 480px) {
+        .vandor-details .vandor-contact {
+            top: 5%;
+        }
+
+        .vandor-details {
+            position: absolute;
+            left: 5%;
+            top: 98%;
+            width: 87%;
+        }
+
+        .product.info.detailed {
+            margin-top: 40%;
+        }
+    }
+</style>
+
+<div class="product-detail-product-add-to-form-and-vandor-info">
+    <div class="product-add-form">
+        <form action="<?php /* @escapeNotVerified */ echo $block->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form" <?php if ($_product->getOptions()) : ?> enctype="multipart/form-data" <?php endif; ?>>
+            <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+            <input type="hidden" name="selected_configurable_option" value="" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+            <?php echo $block->getBlockHtml('formkey') ?>
+            <?php echo $block->getChildHtml('form_top'); ?>
+            <?php if (!$block->hasOptions()) : ?>
+                <?php echo $block->getChildHtml('product_info_form_content'); ?>
+            <?php else : ?>
+                <?php if ($_product->isSaleable() && $block->getOptionsContainer() == 'container1') : ?>
+                    <?php echo $block->getChildChildHtml('options_container') ?>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <?php if ($_product->isSaleable() && $block->hasOptions() && $block->getOptionsContainer() == 'container2') : ?>
+                <?php echo $block->getChildChildHtml('options_container') ?>
+            <?php endif; ?>
+            <?php echo $block->getChildHtml('form_bottom'); ?>
+        </form>
+    </div>
+    <div class="vandor-details">
+        <div class="inner">
+            <span class="vandor-details-label">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">Seller Detail</font>
+                </font>
+            </span>
+            <div class="name-and-sun-container">
+                <h2><a href="<?= $this->getUrl() . $StoreDetails['store_url']; ?>" target="_blank" title="<?= $StoreDetails['store_name'] ?>">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;"><?= $StoreDetails['store_name'] ?></font>
+                        </font>
+                    </a></h2>
+            </div>
+            <p class="vandor-address">
+                <span>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"><?= $StoreDetails['store_address'] ?></font>
+                    </font>
+                </span>
+                <span>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"><?= $StoreDetails['store_city'], ', ', $StoreDetails['store_region'] ?></font>
+                    </font>
+                </span>
+                <span>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"><?= $StoreDetails['store_zipcode'] ?></font>
+                    </font>
+                </span>
+            </p>
+            <a rel="nofollow" class="vandor-contact" href="#" onclick="document.getElementById('my_form').submit(); return false;" target="_blank" title="Questions for the vandor">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">Questions for the Seller</font>
+                </font>
+            </a>
+            <form id="my_form" method="post" action="<?php echo $this->getUrl('marketplace/index/vendorcontact') ?>">
+                <?php echo $this->getBlockHtml('formkey') ?>
+                <input type="hidden" name="referral" value="<?php echo $currentProduct->getProductUrl(); ?>" />
+                <input type="hidden" name="sellerId" value="<?php echo $sellerId; ?>" />
+                <a rel="nofollow" class="vandor-contact" href="#" onclick="document.getElementById('my_form').submit(); return false;" target="_blank" title="Questions for the vandor">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Questions for the Seller</font>
+                    </font>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    require([
+        'jquery',
+        'priceBox'
+    ], function($) {
+        if ($('.amasty-hide-price-text').length > 0) {
+            $('div.short-action').hide();
+            $('div.text-description').hide();
+        }
+        var dataPriceBoxSelector = '[data-role=priceBox]',
+            dataProductIdSelector = '[data-product-id=<?php echo $block->escapeHtml($_product->getId()) ?>]',
+            priceBoxes = $(dataPriceBoxSelector + dataProductIdSelector);
+
+        priceBoxes = priceBoxes.filter(function(index, elem) {
+            return !$(elem).find('.price-from').length;
+        });
+
+        priceBoxes.priceBox({
+            'priceConfig': <?php /* @escapeNotVerified */ echo $block->getJsonConfig() ?>
+        });
+    });
+</script>
+<div class="short-action">
+    <div class="short-content">
+        <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_view_future_function')->toHtml(); ?>
+    </div>
+</div>

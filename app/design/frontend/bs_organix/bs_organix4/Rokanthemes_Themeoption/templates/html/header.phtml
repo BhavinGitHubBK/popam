@@ -1,0 +1,145 @@
+<div class="header-container">
+	<div class="header">
+		<div class="top-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 text-left contact-header-left">
+						<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contact_header')->toHtml(); ?>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-6 text-right contact-header-right">
+						<?php if ( $this->getChildHtml("store_language") ): ?>
+							<?php echo $this->getChildHtml("store_language"); ?>
+						<?php endif; ?>
+						<?php if( $this->getChildHtml("currency") ): ?>
+							<?php echo $this->getChildHtml("currency"); ?>
+						<?php endif; ?>
+						<div class="social_top">
+							<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('social_top')->toHtml(); ?>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="header-main">
+			<div class="container">
+				<div class="header-main-content">
+					<?php echo $this->getChildHtml("logo"); ?>
+					<?php echo $this->getChildHtml("topSearch"); ?>
+					<div class="actions-header">
+						<?php echo $this->getChildHtml("minicart");?>
+						<div class="wishlist">
+							<a href="<?php echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getBaseUrl('wishlist');?>"><i class="icon-heart lnr lnr-heart"></i></a>
+						</div>	
+						<div class="register-login">
+							<?php if(!$this->helper('Rokanthemes\Themeoption\Helper\Data')->isLoggedIn()){?>
+								<a href="<?php echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getBaseUrl('customer/account/login/');?>">
+									<i class="icon-users lnr lnr-user"></i>
+									<div class="txt-login hidden-sm">
+										<strong><?php echo __('Log in');?></strong> <?php echo __('or');?> <span>
+										<strong><?php echo __('Register');?></strong></span>
+									</div>
+								</a>
+								<?php
+							}
+							else{
+							?>	
+							<a href="<?php echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getBaseUrl('customer/account/logout');?>"><?php echo __('Logout');?></a>
+							<?php } ?>
+						
+						</div>	
+							
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="top-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 col-sm-12 categories-nav">
+						<?php echo $this->getChildHtml("top.navigation.sections"); ?>
+					</div>
+					<div class="col-md-9 col-sm-12 wraper-main-nav">
+						<div class="visible-xs visible-sm icon-menu-bar">
+							<div class="toggle-action">
+								<div class="menu-line"></div>
+								<div class="menu-line"></div>
+								<div class="menu-line"></div>
+							</div>
+						</div>		
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('main-nav')->toHtml();?>
+					</div>
+				</div>
+				<?php //echo $this->getChildHtml("top.navigation.sections"); ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php if ($this->helper('Rokanthemes\Themeoption\Helper\Themeconfig')->isEnableStickyHeader()): ?>
+<script type="text/javascript">
+    require(['jquery'],function($){
+        $(document).ready(function($){
+        	var screenWidth = $(window).width();
+        	var num = $('.header-container').outerHeight();
+        	var flag = true;
+			function scrollSticky() {
+				$(window).scroll(function() {
+					if ($(this).scrollTop() > num && screenWidth >= 991 ){  
+						$(".header").addClass("sticky");
+						$('.side-verticalmenu').removeClass('open');
+						var width_container = $(".header-container .container").outerWidth();
+						var fixed_right = (screenWidth - width_container) / 2;
+						$(".header-container.sticky .minicart-wrapper").css('right', fixed_right+'px');
+					}else if( $(this).scrollTop() <= num && screenWidth >= 991 ){
+						$(".header").removeClass("sticky");
+						$('.cms-index-index .side-verticalmenu').addClass('open');
+						$(".header-container .minicart-wrapper").css('right', 'initial');
+					}else {
+						$(".header").removeClass("sticky");
+					}
+					
+				});
+			}
+			scrollSticky();
+
+			$(window).resize(function(){
+				screenWidth = $(window).width();
+        		scrollSticky();
+        	});
+
+		});
+    });
+</script>
+<?php endif; ?>
+<script type="text/javascript">
+	require(['jquery'],function($){
+		$(".main-nav li.ui-menu-item > .open-children-toggle").click(function(){
+	        if(!$(this).parent().hasClass("opened")) {
+	            $(this).parent().addClass("opened");
+	        }
+	        else {
+	            $(this).parent().removeClass("opened");
+	        }
+	    });
+		$('.wraper-main-nav .icon-menu-bar').click(function(){
+	        if(!$(this).parent().hasClass("active")) {
+	            $(this).parent().addClass("active");
+	        }
+	        else {
+	            $(this).parent().removeClass("active");
+	        }
+	    });
+
+	    
+	    $(document).ready(function($){
+	        var widthMobile = $(window).width();
+	        if ( widthMobile < 991 ) {
+	            $('.side-verticalmenu').removeClass('open');
+	        }
+	    });
+    });
+</script>

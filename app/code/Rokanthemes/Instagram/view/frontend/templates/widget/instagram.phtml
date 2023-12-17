@@ -1,0 +1,89 @@
+<?php 
+$helper = $this->helper('Rokanthemes\Instagram\Helper\Data');
+$owl_item_default = $block->getData('owl_item_default');
+$owl_item_desktop = $block->getData('owl_item_desktop');
+$owl_item_small_desktop = $block->getData('owl_item_small_desktop');
+$owl_item_big_tablet = $block->getData('owl_item_big_tablet');
+$owl_item_tablet = $block->getData('owl_item_tablet');
+$owl_item_small_tablet = $block->getData('owl_item_small_tablet');
+$owl_item_mobile = $block->getData('owl_item_mobile');
+$rows = $block->getData('rows');
+$owl_margin = $this->getData('owl_margin');
+$next_back = (1 == $this->getData('next_back')) ? 'true' : 'false';
+$owl_dots = (1 == $this->getData('owl_dots')) ? 'true' : 'false';
+$title = $helper->getConfig('instagramsection/instagramgroup/title');
+
+if($helper->getConfig('instagramsection/instagramgroup/active')){
+	$collections = $block->getInstagramPostByStoreView();
+?>
+<div class="cp-ftitle">
+	<h2>
+    	<?php echo $title; ?>
+	</h2>
+</div>
+<div class="section container-rokan-instagram rokantheme-instagram">
+	<?php if($collections->count() > 0){ ?>
+	<div class="content-images-rokan-instagram">
+		<div class="owl"> 
+			<?php 
+				$i=0;
+				foreach ($collections as $val_co) { 
+				if($i %$rows == 0){
+					echo '<div class="item-row">';
+				}
+				$i ++;
+				?>
+				<div class="instangram-feed">
+	                <a href="<?= $val_co->getPermalink() ;?>" target="_blank" class="<?= $block->getData('image_format') ?> <?php if($block->getData('show_captions') == 'yes'){ ?>has-caption<?php } ?> <?php if($block->getData('show_instagram_icon') == 'yes'){ ?>has-intagram-icon<?php } ?>">
+						<figure>
+							<div>
+								<img alt="<?= $val_co->getIdInstagram() ;?>" src="<?= $val_co->getMediaUrl() ;?>">
+							</div>
+							<?php if($block->getData('show_captions') == 'yes' && $val_co->getCaption()){ ?>
+							<figcaption><?= $val_co->getCaption() ?></figcaption>
+							<?php } ?>
+						</figure>
+					</a>
+	            </div>
+				<?php if($i %$rows == 0) echo "</div>"; ?>
+			<?php } ?>
+			<?php if($i %$rows != 0) echo "</div>"; ?>
+		</div>
+	</div>
+	<?php }else{ ?>
+	<div class="instagram-connect-error">
+		<p><strong><?php echo __('Error: No connected account.');?></strong></p>
+		<p><?php echo __('Please go to the admin > Rokanthemes > Configuration > Instagram: Settings page to connect an account.');?></p>
+	</div>
+	<?php } ?>
+</div> 
+	
+
+<script type="text/javascript">
+	require([
+		'jquery',
+		'mage/mage',
+		'rokanthemes/owl'
+	], function ($) {
+		'use strict';
+
+		jQuery(".content-images-rokan-instagram .owl").owlCarousel({
+			lazyLoad: false,
+			autoPlay : false,
+			items : <?php echo $owl_item_default; ?>,
+			itemsDesktop : [1199,<?php echo $owl_item_desktop; ?>],
+			itemsDesktopSmall : [991,<?php echo $owl_item_small_desktop; ?>],
+			itemsTablet: [768,<?php echo $owl_item_tablet; ?>],
+			itemsMobile : [479,<?php echo $owl_item_mobile; ?>],
+			slideSpeed : 500,
+			paginationSpeed : 500,
+			rewindSpeed : 500,
+			navigation : <?php if($next_back) echo 'true'; else echo 'false'; ?>,
+			stopOnHover : true,
+			pagination :false,
+			scrollPerPage:false,
+		});
+	});
+</script>
+
+<?php } ?>

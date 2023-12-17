@@ -1,0 +1,50 @@
+<div class="top-content-home">
+	<div class="section-element banner-slider margin-bottom-md">
+<?php echo $block->getLayout()->createBlock('Rokanthemes\SlideBanner\Block\Slider')->setTemplate('Rokanthemes_SlideBanner::slider.phtml')->setSliderId('1')->toHtml();?>
+	</div>
+	<div class="section-element banner-top-home">
+		<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('banner_top')->toHtml();?>
+	</div>
+	<div class="section-element shipping_support">
+		<div class="container">
+			<div class="row">
+				<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('shipping_support')->toHtml();?>
+			</div>
+		</div>
+	</div>
+	<div class="section-element our-stories">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('our_stories')->toHtml();?>
+		</div>
+	</div>
+	<div class="section-element categories_tab">
+		<div class="container-full">
+			<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('categories_tab')->toHtml();?>
+		</div>
+	</div>
+	<div class="section-element featured-categories">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('shop_by_categories')->toHtml(); ?>
+		</div>
+	</div>
+	<div class="section-element onsale-countdown">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Rokanthemes\PriceCountdown\Block\Pricecountdown')->setTemplate('Rokanthemes_PriceCountdown::pricecountdown.phtml')->toHtml();?>
+		</div>
+	</div>
+	<div class="section-element section_testimonial">
+		<?php echo $block->getLayout()->createBlock('Rokanthemes\Testimonial\Block\Testimonial')->setTemplate('Rokanthemes_Testimonial::testimonial.phtml')->toHtml();?>
+	</div>
+
+	<div class="section-element section-brands">
+		<div class="container">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('brand-logo')->toHtml(); ?>
+		</div>
+	</div>
+
+	<div class="section-element box-blog">
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Rokanthemes\Blog\Block\Sidebar\Recent')->setTemplate('Rokanthemes_Blog::sidebar/slider.phtml')->toHtml();?>
+		</div>
+	</div>
+</div>
